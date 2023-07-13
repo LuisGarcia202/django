@@ -1,0 +1,21 @@
+{% extends 'crud/base.html' %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                <i class="fa-solid fa-user-plus fa-lg"></i> Registro de Usuario
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    
+                    <button type="submit" class="btn btn-primary" id="submit">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

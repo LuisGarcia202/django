@@ -1,0 +1,20 @@
+{% extends 'crud/base.html' %}
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col6">
+        <div class="card border-primary mb-3">
+            <div class="card header">
+                <h4 style="text-align: initial;"> Login</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                    <a href="{% url 'register' %}">Registrar</a>
+                    <button type="submit" class="btn btn-primary" id="submit">login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

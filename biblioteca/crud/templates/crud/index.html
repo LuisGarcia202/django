@@ -1,0 +1,156 @@
+{% extends "crud/base.html" %}
+
+{% block body %}
+<div class="row">
+  <div class="col-12">
+    {% if libro %}
+    <div class="card bg-light ms-4 me-4 mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Listar Libro
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                    <th scope="col">N°</th>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for libros in libro %}
+                  <tr>
+                    <td>{{ libros.id }}</td>
+                    <td>{{ libros.codigo }}</td>
+                    <td>{{ libros.nombre }}</td>
+                    <td>{{ libros.autor }}</td>
+
+                    <td>
+                      <button type="button" class="btn btn-success me-1" href="{% url 'view_libro' libros.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{libros.id}}">
+                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                      </button>
+
+                      <!-- Modal - Vista de Libros -->
+                      <div class="modal" id="myModal{{libros.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">
+                                Libros: <strong>{{ libros.nombre }}</strong>
+                              </h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <ul class="list-unstyled">
+                                <li>Nombre: <strong>{{ libros.nombre }}</strong></li>
+                                <li>Autor: <strong>{{ libros.autor }}</strong></li>
+                                <li>Codigo: <strong>{{ libros.codigo }}</strong></li>
+                              </ul>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <!--El que se edita -->
+                      <a class="btn btn-warning me-1" href="{% url 'edit' libros.id %}">
+                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                      </a>
+
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{libros.id}}">
+                        <i class="fa-solid fa-trash-can fa-lg"></i>
+                      </button>
+
+                      <!-- Modal - Delete libros -->
+                      <div class="modal" id="delete{{libros.id}}" tabindex="-1" aria-labelledby="myModalLabel2" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Eliminar Libros
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                <p>Esta seguro de Eliminar el Libros?</p>
+                                </div>
+                                <div class="modal-footer">
+                                <form action="{% url 'eliminar' libros.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Eliminar">
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                            </div>
+                      </div>
+                      <!--Modal de crear libro-->
+                        <a class="btn btn-info" href="{% url 'add' %}">
+                          <i class="fa-solid fa-plus fa-lg"></i>
+                        </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </p>
+      </div>
+    </div>
+    {% else %}
+    <div class="alert alert-dismissible alert-warning">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <h4 class="alert-heading">Advertencia!</h4>
+      <p class="mb-0">No hay registo en la bases de datos..!!! </p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<!--Esta es la lista compra de libro-->
+<div class="row">
+  <div class="col-12">
+    {% if compras %}
+    <div class="card bg-light ms-4 me-4 mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Listar Compras
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Libro</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for compra in compras %}
+            <tr>
+              <td>{{ compra.libro.nombre }}</td>
+              <td>{{ compra.fecha }}</td>
+              <td>{{ compra.cantidad }}</td>
+              <tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <h4 class="alert-heading">Información!</h4>
+      <p class="mb-0">No se han realizado compras.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
