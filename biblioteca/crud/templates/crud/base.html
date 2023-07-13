@@ -32,6 +32,7 @@
             {% endif %}
           </ul>
           <form class="d-flex">
+            <!--nota tiene que registrarse con letra y numero por las validacion-->
             {% if request.user.is_authenticated %}
             <a class="btn btn-primary my-2 my-sm-0" href="{% url 'logout' %}"><i class="fa-solid fa-person-walking-arrow-right"></i> Salir</a>
             {% else %}

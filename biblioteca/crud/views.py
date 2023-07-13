@@ -93,7 +93,7 @@ def compras(request):
     context = {'form': form}
     return render(request, 'crud/compras.html', context)
 #registrase
-
+#nota tiene que registrarse con letra y numero por las validacion 
 def registrar(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)

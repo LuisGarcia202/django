@@ -32,7 +32,7 @@ class CompraForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['libro'].queryset = Libro.objects.all()
 
-
+#nota tiene que registrarse con letra y numero por las validacion
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label="Usuario", widget=forms.TextInput(attrs={'class':'form-control'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
